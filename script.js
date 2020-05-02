@@ -2,6 +2,7 @@ var canvas = document.getElementById("canvas"),
 	originalImage = null,
 	imageGrey = null,
 	imageRed = null,
+	imageBlue = null,
 	imageRainbow = null;
 
 function loadImage() {
@@ -10,6 +11,7 @@ function loadImage() {
 	 originalImage = new SimpleImage(file);
 	 imageGrey = new SimpleImage(file);
 	 imageRed = new SimpleImage(file);
+	 imageBlue = new SimpleImage(file);
 	 imageRainbow = new SimpleImage(file);
 	
 	originalImage.drawTo(canvas);
@@ -56,6 +58,22 @@ function makeRed() {
 		}
 	}
 	imageRed.drawTo(canvas);
+}
+  
+function makeBlue() {
+	// Reset Image
+	for(var pixel of imageBlue.values()) {
+		var originalPixel = originalImage.getPixel(pixel.getX(), pixel.getY());
+		imageRed.setPixel(pixel.getX(), pixel.getY(), originalPixel)
+	}
+
+	//Blue Filter
+	for(var pixel of imageBlue.values()){
+		pixel.setGreen(0);
+		pixel.setRed(0);
+		pixel.setBlue(255);
+	  }
+	  imageBlue.drawTo(canvas);
 }
 
 function makeRainbow() {
